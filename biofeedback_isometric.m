@@ -60,11 +60,15 @@ i = 1;
 while ishandle(figureHandle)
     try
         event = QCM('event');
-        [~, force] = QCM;
+        [frameinfo, force] = QCM;
         
         % get GRF Z from plate 1,2 unit: kgf
-        GRF1 = (force{2,2}(1,3)); % right
-        GRF2 = (force{2,1}(1,3)); % left
+        try
+            GRF1 = (force{2,2}(1,3)); % right
+            GRF2 = (force{2,1}(1,3)); % left
+        catch exception
+            continue;
+        end
 
         diff_grf = GRF2 - GRF1;
         
